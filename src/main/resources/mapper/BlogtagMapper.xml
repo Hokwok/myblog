@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kwok.mapper.BlogtagMapper">
+
+    <resultMap id="BlogtagMap" type="Blogtag"></resultMap>
+
+    <select id="getLastBlogtag" resultType="Blogtag">
+        select * from blog_tag order by id desc limit 1
+    </select>
+
+    <insert id="saveBlogtag" parameterType="Blogtag">
+        insert into blog_tag (id, blog_id, tag_id) values (#{id}, #{blog_id},#{tag_id})
+    </insert>
+
+    <select id="getTagIdByBlogId" resultMap="BlogtagMap" parameterType="int">
+        select * from blog_tag where blog_id = #{id}
+    </select>
+
+    <delete id="deletePreBlogtag" parameterType="int">
+        delete from blog_tag where blog_id = #{blogId}
+    </delete>
+
+</mapper>

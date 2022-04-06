@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kwok.mapper.BlogMapper">
+
+    <resultMap id="BlogMap" type="Blog"></resultMap>
+    <resultMap id="BlogYearMap" type="String"></resultMap>
+
+    <select id="getBlogCount" resultType="int">
+        select count(1) as count from blog
+    </select>
+
+    <select id="getBlogList" resultMap="BlogMap" parameterType="map">
+        select b.*,t.name as typeName from blog b,type t where b.type_id=t.id order by b.id desc limit #{currentPageNo},#{pageSize}
+    </select>
+
+    <select id="getBlogById" resultType="Blog">
+        select *
+        from blog where id = #{id}
+    </select>
+    
+    <!--搜索及翻页-->
+    <select id="getBlogSearchCount" resultType="int" parameterType="map">
+        select count(1) as count from blog
+        <where>
+            <if test="recommend != null">
+                recommend = #{recommend}
+            </if>
+            <if test="type_id != null">
+                and type_id = #{type_id}
+            </if>
+            <if test="title != null">
+                and title like concat(concat('%',#{title}),'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getSearchBlogList" resultMap="BlogMap" parameterType="map">
+        select b.*,t.name as typeName from blog b,type t
+        <where>
+            <if test="1 == 1">
+                b.type_id=t.id
+            </if>
+            <if test="recommend != null">
+                and b.recommend = #{recommend}
+            </if>
+            <if test="type_id != null">
+                and b.type_id = #{type_id}
+            </if>
+            <if test="title != null">
+                and b.title like concat(concat('%',#{title}),'%')
+            </if>
+        </where>
+        order by b.id desc limit #{currentPageNo},#{pageSize}
+    </select>
+
+    <select id="getLastBlog" resultType="Blog">
+        select * from blog order by id desc limit 1
+    </select>
+
+    <insert id="saveBlog" parameterType="Blog">
+        insert into blog
+            (id, title,description,
+             content, first_picture,
+             flag, views,
+             appreciation, share_statement,
+             commentabled, published,
+             recommend, create_time,
+             update_time, type_id, user_id)
+              values (#{id},#{title},#{description},#{content},#{first_picture},#{flag},
+                      #{views},#{appreciation},#{share_statement},#{commentabled},
+                      #{published},#{recommend},#{create_time},#{update_time},#{type_id},#{user_id})
+    </insert>
+
+    <update id="updateBlog" parameterType="Blog">
+        update blog
+        set title=#{title},content=#{content},description=#{description},
+            first_picture=#{first_picture},
+            flag=#{flag},appreciation=#{appreciation},
+            share_statement=#{share_statement},commentabled=#{commentabled},
+            published=#{published},recommend=#{recommend},
+            update_time=#{update_time},type_id=#{type_id} where id = #{id}
+    </update>
+
+    <update id="updateBlogViews" parameterType="Blog">
+        update blog
+        set views=#{views} where id = #{id}
+    </update>
+
+    <delete id="deleteBlog" parameterType="int">
+        delete from blog where id = #{id}
+    </delete>
+
+    <select id="listTopRecommendBlog" resultMap="BlogMap" parameterType="map">
+        select * from blog where recommend = 1 order by update_time desc
+    </select>
+
+    <select id="listHotBlog" resultMap="BlogMap" parameterType="map">
+        select * from blog order by views desc
+    </select>
+
+    <select id="getBlogCountByTypeId" parameterType="int" resultType="int">
+        select count(1) as count from blog where type_id = #{id}
+    </select>
+
+    <select id="getBlogCountByTagId" parameterType="int" resultType="int">
+        select count(1) as count from blog_tag where tag_id = #{id}
+    </select>
+
+    <select id="getBlogListByTypeId" resultMap="BlogMap" parameterType="map">
+        select b.*,t.name as typeName from blog b,type t where b.type_id=t.id and b.type_id=#{id}
+        order by b.id desc limit #{currentPageNo},#{pageSize}
+    </select>
+
+    <select id="getBlogListByTagId" resultMap="BlogMap" parameterType="map">
+        select b.*,bt.tag_id,t.name from blog b,blog_tag bt,tag t where bt.blog_id=b.id and bt.tag_id=t.id and bt.tag_id=#{id}
+        order by b.id desc limit #{currentPageNo},#{pageSize}
+    </select>
+
+    <select id="getPreBlogsById" resultMap="BlogMap" parameterType="map">
+        select * from blog where type_id=#{tid} and id > #{fid}
+    </select>
+
+    <select id="getNextBlogsById" resultMap="BlogMap" parameterType="map">
+        select * from blog where type_id=#{tid} and #{lid} > id
+    </select>
+
+    <select id="getPreBlogsByTagId" resultMap="BlogMap" parameterType="map">
+        select b.* from blog b,blog_tag bt where b.id = bt.blog_id and bt.tag_id=#{tid} and b.id > #{fid}
+    </select>
+
+    <select id="getNextBlogsByTagId" resultMap="BlogMap" parameterType="map">
+        select b.* from blog b,blog_tag bt where b.id = bt.blog_id and bt.tag_id=#{tid} and #{lid} > b.id
+    </select>
+
+    <select id="findGroupYear" resultMap="BlogYearMap">
+        select date_format(b.update_time,'%Y') as year from blog b group by year order by year desc
+    </select>
+
+    <select id="findBlogByYear" resultMap="BlogMap" parameterType="string">
+        select * from blog b where date_format(b.update_time,'%Y') = #{year}
+    </select>
+
+</mapper>

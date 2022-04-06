@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kwok.mapper.CommentMapper">
+
+    <resultMap id="CommentMap" type="Comment"></resultMap>
+
+    <select id="listCommentByBlogId" resultMap="CommentMap" parameterType="map">
+        select *
+        from comment where blog_id = #{blogId} and parent_id = 0 order by creat_time asc
+    </select>
+
+    <select id="searchReplyComments" resultMap="CommentMap" parameterType="map">
+        select *
+        from comment where parent_id = #{id} order by creat_time asc
+    </select>
+
+    <select id="getParentComment" resultType="Comment">
+        select *
+        from comment where id = #{id}
+    </select>
+
+    <select id="getLastComment" resultType="Comment">
+        select *
+        from comment order by id desc limit 1
+    </select>
+
+    <insert id="saveComment" parameterType="Comment">
+        insert into comment
+        (id, nickname, email, avatar, content, creat_time, blog_id, parent_id, isadmin)
+        values (#{id},#{nickname},#{email},#{avatar},#{content},#{creat_time},
+                #{blog_id},#{parent_id},#{isadmin})
+    </insert>
+
+</mapper>

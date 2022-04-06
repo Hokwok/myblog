@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!--移动端的预览设置，用于适配移动端-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="/Semantic-UI-CSS-master/semantic.min.css">
+    <link rel="stylesheet" href="/css/myblog.css">
+    <title>Error-Hokwok</title>
+</head>
+<body>
+<!--导航-->
+<nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+</nav>
+
+
+<!--中间内容-->
+<br>
+<br>
+<br>
+<br>
+<div class="m-container-small m-padded-tb-big">
+    <div class="ui container">
+        <div class="ui segment middle aligned">
+            <h1>很抱歉，你可能遇到了点错误，请联系管理员解决！</h1>
+        </div>
+    </div>
+</div>
+<div class="ui container m-container-small m-padded-tb-big m-opacity-mini">
+    <div th:text="'&lt;!--'" th:remove="tag" ></div>
+    <div th:text="'Failed Request URL : '+${url}" th:remove="tag"></div>
+    <div th:text="'Exception message :'+${exception.message}" th:remove="tag"></div>
+    <ul  th:remove="tag">
+        <li th:each="st : ${exception.stackTrace}" th:remove="tag"></li>
+        <span th:utext="${st}" th:remove="tag"></span>
+    </ul>
+    <div th:text="'--&gt;'" th:remove="tag" ></div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<script src="/js/jquery-3.5.1.min.js"></script>
+<script src="/Semantic-UI-CSS-master/semantic.min.js"></script>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

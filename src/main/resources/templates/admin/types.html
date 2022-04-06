@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+    <title>分类管理-Hokwok</title>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav th:replace="admin/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">管理后台</h2>
+            <a href="#" th:href="@{/admin/blogs}" class="m-item item m-mobile-hide"><i class="home icon"></i>博客</a>
+            <a href="#" th:href="@{/admin/types}" class="m-item active item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="#" th:href="@{/admin/tags}" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <div class="right m-item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img src="../../static/images/head.jpg" th:src="@{/images/head.jpg}" alt="" class="ui avatar image">
+                        Hokwok
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" th:href="@{/admin/logout}" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" th:href="@{/admin/types/input}" class="item">新增</a>
+            <a href="#" th:href="@{/admin/types}" class="teal active item">列表</a>
+        </div>
+    </div>
+</div>
+
+<!-- 中间内容 -->
+<div class="m-container-small m-padded-tb-big" style="height: 70% !important;">
+    <div class="ui container">
+        <div class="ui success message" th:unless="${#strings.isEmpty(msg)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${msg}">message</p>
+        </div>
+        <div id="table-container">
+            <table th:fragment="typeList" class="ui compact teal table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>名称</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="type,iterStat: ${types}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${type.name}">Java基础</td>
+                    <td>
+                        <a href="#" th:href="@{/admin/types/edit/{id}(id=${type.id})}" class="ui mini teal basic button">编辑</a>
+                        <a href="#" th:href="@{/admin/types/delete/{id}(id=${type.id})}" class="ui mini red basic button">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="6">
+                        <div class="ui mini pagination menu" th:if="${totalCount}>5">
+<!--                            <a class="item" th:href="@{/admin/types?pageIndex={pageIndex}(pageIndex=${currentPageNo-1})}" th:unless="${#strings.isEmpty(prePageHave)}">上一页</a>-->
+                            <a class="item" th:onclick="gopage([[${currentPageNo-1}]])" th:unless="${#strings.isEmpty(prePageHave)}">上一页</a>
+                            <a class="item" th:onclick="gopage([[${currentPageNo+1}]])" th:unless="${#strings.isEmpty(nextPageHave)}">下一页</a>
+                        </div>
+                        <a href="#" th:href="@{/admin/types/input}" class="ui mini right floated teal basic button" style="margin-top: 0.6em;">新增</a>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 底部 -->
+<footer th:replace="_fragments :: footer"></footer>
+
+<th:block th:replace="_fragments :: script">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+</th:block>
+
+<script>
+    //网站运营时长
+    function show_date_time(){
+        window.setTimeout("show_date_time()", 1000);
+        BirthDay=new Date("10/13/2021 16:51:15");
+        today=new Date();
+        timeold=(today.getTime()-BirthDay.getTime());
+        sectimeold=timeold/1000
+        secondsold=Math.floor(sectimeold);
+        msPerDay=24*60*60*1000
+        e_daysold=timeold/msPerDay
+        daysold=Math.floor(e_daysold);
+        e_hrsold=(e_daysold-daysold)*24;
+        hrsold=Math.floor(e_hrsold);
+        e_minsold=(e_hrsold-hrsold)*60;
+        minsold=Math.floor((e_hrsold-hrsold)*60);
+        seconds=Math.floor((e_minsold-minsold)*60);
+        span_dt_dt.innerHTML='<font style=color:#00FF00>'+daysold+'</font> 天 <font style=color:#00FF00>'+hrsold+'</font> 时 <font style=color:#00FF00>'+minsold+'</font> 分 <font style=color:#00FF00>'+seconds+'</font> 秒';
+    }
+    show_date_time();
+
+    $('.menu.toggle').click(function(){
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+    // 消息提示关闭初始化
+    $('.message .close')
+        .on('click', function() {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+    function gopage(pageIndex) {
+        $("#table-container").load(/*[[@{/admin/tags/topage}]]*/"/admin/types/topage", {
+                pageIndex:pageIndex
+            }
+        )
+    }
+</script>
+</body>
+</html>

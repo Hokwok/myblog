@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <link rel="stylesheet" href="../static/css/animate.min.css" th:href="@{/css/animate.min.css}"/>
+  <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+  <title>归档-Hokwok</title>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav th:replace="_fragments :: menu(4)"></nav>
+
+  <!-- 中间内容 -->
+  <div class="m-container-small m-padded-tb-big animate__animated animate__pulse">
+    <div class="ui container">
+      <!-- header -->
+      <div class="ui top attached padded segment">
+        <div class="ui middle aligned two column grid">
+          <div class="column">
+            <h3 class="ui teal header">归档</h3>
+          </div>
+          <div class="right aligned column">
+            共<h2 class="ui orange header m-inline-block m-text-thin" th:text="${blogCount}">124</h2>篇博客
+          </div>
+        </div>
+      </div>
+
+      <th:block th:each="item : ${archiveMap}">
+      <h2 class="ui center aligned header" th:text="${item.key}">2017</h2>
+      <div class="ui fluid vertical menu kanbanblogshow">
+        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item" th:each="blog : ${item.value}">
+          <span>
+            <i class="teal circle icon"></i><span th:text="${blog.title}">2017年总结：携梦而行，无怨无悔</span>
+            <div class="ui teal basic left pointing label m-padded-mini" th:text="${#dates.format(blog.update_time,'MMMdd')}">10月03</div>
+          </span>
+          <div class="ui orange basic left pointing label m-padded-mini" th:text="${blog.flag}">原创</div>
+        </a>
+      </div>
+      </th:block>
+
+    </div>
+  </div>
+
+  <!-- 底部 -->
+  <footer th:replace="_fragments :: footer"></footer>
+
+  <th:block th:replace="_fragments :: script"></th:block>
+
+  <script>
+
+    //网站运营时长
+    function show_date_time(){
+      window.setTimeout("show_date_time()", 1000);
+      BirthDay=new Date("10/13/2021 16:51:15");
+      today=new Date();
+      timeold=(today.getTime()-BirthDay.getTime());
+      sectimeold=timeold/1000
+      secondsold=Math.floor(sectimeold);
+      msPerDay=24*60*60*1000
+      e_daysold=timeold/msPerDay
+      daysold=Math.floor(e_daysold);
+      e_hrsold=(e_daysold-daysold)*24;
+      hrsold=Math.floor(e_hrsold);
+      e_minsold=(e_hrsold-hrsold)*60;
+      minsold=Math.floor((e_hrsold-hrsold)*60);
+      seconds=Math.floor((e_minsold-minsold)*60);
+      span_dt_dt.innerHTML='<font style=color:#00FF00>'+daysold+'</font> 天 <font style=color:#00FF00>'+hrsold+'</font> 时 <font style=color:#00FF00>'+minsold+'</font> 分 <font style=color:#00FF00>'+seconds+'</font> 秒';
+    }
+    show_date_time();
+
+    $('.menu.toggle').click(function(){
+      $('.m-item').toggleClass('m-mobile-hide');
+    });
+  </script>
+</body>
+</html>

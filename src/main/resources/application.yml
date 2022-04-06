@@ -1,0 +1,18 @@
+spring:
+  thymeleaf:
+    mode: HTML
+    cache: false
+  profiles:
+    active: dev
+  mvc:
+    servlet:
+      load-on-startup: 1
+  datasource:
+    hikari:
+      minimum-idle: 10 #最小空闲连接数量(有待考证是否会初始化10个连接)
+
+# 解决SpringBoot集成Thymeleaf时，首次访问静态资源路径拼接jsessionid问题
+server:
+  servlet:
+    session:
+      tracking-modes: COOKIE

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <link rel="stylesheet" href="../static/css/animate.min.css" th:href="@{/css/animate.min.css}"/>
+  <link rel="stylesheet" href="../static/css/index.css" th:href="@{/css/index.css}">
+  <title>Hokwok-一条咸鱼的个人博客网站</title>
+</head>
+<body>
+  <div id="menu-button" class="menu-icon menu-fixed menu-right-bottom">
+    <i id="menu-button-icon" style="font-size: 25px; margin-top: 9px; margin-left: 5px;" class="list icon"></i>
+  </div>
+  <div class="wrapper-menu-default">
+    <div class="wrapper-menu wrapper-menu-fixed">
+      <div class="list-right animate__animated animate__slideInRight">
+        <a class="home-item" href="#" th:href="@{/index}"><div class="first-item">首页</div></a>
+        <a class="blog-item" href="#" th:href="@{/types/-1}"><div class="second-item">分类</div></a>
+        <a class="manage-item" href="#" th:href="@{/admin}"><div class="third-item">后台</div></a>
+        <div class="logoname">Hokwok</div>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper-top">
+    <div class="wrapper-info">
+      <div id="waypoint" class="wrapper-name animate__animated animate__zoomIn">Hokwok</div>
+      <div class="wrapper-des animate__animated animate__zoomIn">追着光，靠近光，成为光，散发光...</div>
+      <button onclick="jumpIndexPage()" class="ui primary button startbtn animate__animated animate__zoomIn">
+        Enter Blog
+      </button>
+      <div id="toNext-button" class="down-icon animate__animated animate__fadeInUp">
+        <i class="angle down icon" style="margin-top: 0.5em; padding-left: 0.25em;"></i>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper-middle">
+    <div class="middle-wrapper">
+      <div id="middle-wrapper-top" style="display: none;">
+        <div class="middle-title">
+          热门文章
+          <div class="middle-afterline"></div>
+        </div>
+        <div class="middle-text1">
+          很想给你写封信,告诉你这里的天气。
+        </div>
+        <div class="middle-text2">
+          昨夜的那场电影,还有我的心情。
+        </div>
+      </div>
+      <div style="margin-top: 2.5em;">
+        <span class="middle-hotblog" th:each="blog : ${hotblogList}">
+          <a th:href="@{/blog/{id}(id=${blog.id})}" href="#">
+            <img src="../static/index/33.jpg" th:src="@{${blog.first_picture}}" alt="" class="ui rounded image">
+          </a>
+          <div class="middle-hotblog-title" th:text="${blog.title}">SpringBoot之参数校验详解</div>
+          <div class="middle-hotblog-time">
+            <i class="calendar icon"></i><span th:text="${#dates.format(blog.update_time,'yyyy-MM-dd HH:mm:ss')}">2021-12-5 15:16:53</span>
+          </div>
+          <div th:text="|${blog.description}......|" class="middle-hotblog-content">在本博客的其中一个方法上使用了@Validated注解来获取url上的参数，但是因为是url上参数，有可能被恶意破坏数据构，比如超长的字符串，各种乱七八糟的字</div>
+          <div class="content" style="margin-left: 1.5em;"><a href="#" th:href="@{/blog/{id}(id=${blog.id})}" class="header readmoreblog">阅读更多</a></div>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper-bottom1">
+    <div style="height: 4.5em"></div>
+    <div class="wrapper-bottom1-links">
+      <div style="height: 1.5em"></div>
+      <span>
+        <a href="#" th:href="@{/about}" id="wrapper-bottom1-links-left" class="wrapper-bottom1-links-left" style="display: none;">
+          <span style="color: #fff;">关于</span>
+        </a>
+      </span>
+      <span>
+        <a href="#" th:href="@{/archives}" id="wrapper-bottom1-links-right" class="wrapper-bottom1-links-right" style="display: none;">
+          <span style="color: #fff;">+归档</span>
+        </a>
+      </span>
+    </div>
+  </div>
+  <div class="wrapper-bottom2">
+    <div style="height: 7em"></div>
+    <div id="wrapper-bottom2-first" class="wrapper-bottom2-first" style="display: none;">翻腾的咸鱼</div>
+    <div style="height: 2em"></div>
+    <div id="wrapper-bottom2-second" class="wrapper-bottom2-second" style="display: none;">喜欢音乐、摄影，瞎折腾浪费时间最在行！爱好折腾去解决一切问题，在我眼里没有什么问题是尝试不能解决的。</div>
+  </div>
+  <div id="toTop-button" class="ui icon button m-fixed m-right-bottom" style="display: none;">
+    <i style="font-size: 25px;" class="angle double up icon"></i>
+    <div style="font-size: 2px;">TOP</div>
+  </div>
+
+  <div id="wrapper-bottom3" class="wrapper-bottom3" style="display: none;">
+    <div style="height: 7em"></div>
+    <div class="wrapper-bottom3-first">
+      <div class="wrapper-bottom3-first-left">
+        <div class="wrapper-bottom3-first-left-name">Hokwok</div>
+        <div style="margin-top: 16px; color: #fff;">生活的理想，就是为了理想的生活。</div>
+        <button style="margin-top: 16px" onclick="jumpAboutPage()" class="ui primary button">
+          About Me
+        </button>
+      </div>
+      <div class="wrapper-bottom3-first-middle">
+        <div class="wrapper-bottom3-first-middle-name">相关链接</div>
+        <div class="wrapper-bottom3-first-middle-links">
+          <span style="padding: 0 3em;">
+            <a class="links-green1" href="#" th:href="@{/index}">
+              <i class="book icon linkcolor1"></i>
+              <span class="linkcolor1">博文</span>
+            </a>
+          </span>
+          <span style="padding: 0 3em;">
+            <a class="links-green2" href="#" th:href="@{/archives}">
+              <i class="archive icon linkcolor2"></i>
+              <span class="linkcolor2">归档</span>
+            </a>
+          </span>
+        </div>
+        <div class="wrapper-bottom3-first-middle-links">
+          <span style="padding: 0 3em;">
+            <a class="links-green3" target="_blank" href="https://github.com/Hokwok">
+              <i class="github icon linkcolor3"></i>
+              <span class="linkcolor3">GitHub</span>
+            </a>
+          </span>
+        </div>
+      </div>
+      <div class="wrapper-bottom3-first-right">
+        <div class="wrapper-bottom3-first-right-name">联系我</div>
+        <div style="margin-top: 16px; color: #fff;">
+          <i class="weixin icon"></i>
+          <span>Wechat: G596677937</span>
+        </div>
+        <div style="margin-top: 16px; color: #fff;">
+          <i class="qq icon"></i>
+          <span>QQ: 596677937</span>
+        </div>
+        <div style="margin-top: 16px; color: #fff;">
+          <i class="mail icon"></i>
+          <span>邮箱: 596677937@qq.com</span>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper-bottom3-second">
+      Copyright © 2021-2022 Hokwok All Rights Reserved V.1.2 &nbsp;&nbsp;&nbsp;<a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" style="color: #4183c4;">陕ICP备2022001720号</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.3/jquery.scrollTo.min.js"></script>
+  <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+
+  <script>
+    function gdjz(div,cssname,offset){
+      var a,b,c,d;
+      d=$(div).offset().top;
+      a=eval(d + offset);
+      b=$(window).scrollTop();
+      c=$(window).height();
+      if(b+c>a){
+        $((div)).addClass((cssname));
+        $((div)).show(100);
+      }
+    }
+    $(document).ready(function(e) {
+      $(window).scroll(function(){
+        gdjz("#middle-wrapper-top",'animate__animated animate__fadeInDown',850);
+        gdjz("#wrapper-bottom1-links-left",'animate__animated animate__fadeInLeft',1850);
+        gdjz("#wrapper-bottom1-links-right",'animate__animated animate__fadeInRight',1850);
+        gdjz("#wrapper-bottom2-first",'animate__animated animate__lightSpeedInLeft',2130);
+        gdjz("#wrapper-bottom2-second",'animate__animated animate__lightSpeedInRight',2150);
+        gdjz("#wrapper-bottom3",'animate__animated animate__fadeInUp',2170);
+      });
+    });
+    $('.links-green1').mouseover(function(){
+      $('.linkcolor1').addClass('linkcolorgreen1');
+      $('.linkcolorgreen1').removeClass('linkcolor1');
+    })
+    $('.links-green1').mouseout(function(){
+      $('.linkcolorgreen1').addClass('linkcolor1');
+      $('.linkcolor1').removeClass('linkcolorgreen1');
+    })
+    $('.links-green2').mouseover(function(){
+      $('.linkcolor2').addClass('linkcolorgreen2');
+      $('.linkcolorgreen2').removeClass('linkcolor2');
+    })
+    $('.links-green2').mouseout(function(){
+      $('.linkcolorgreen2').addClass('linkcolor2');
+      $('.linkcolor2').removeClass('linkcolorgreen2');
+    })
+    $('.links-green3').mouseover(function(){
+      $('.linkcolor3').addClass('linkcolorgreen3');
+      $('.linkcolorgreen3').removeClass('linkcolor3');
+    })
+    $('.links-green3').mouseout(function(){
+      $('.linkcolorgreen3').addClass('linkcolor3');
+      $('.linkcolor3').removeClass('linkcolorgreen3');
+    })
+    $('.home-item').mouseover(function(){
+      $('.first-item').addClass('first-item-hover');
+      $('.first-item-hover').removeClass('first-item');
+    })
+    $('.home-item').mouseout(function(){
+      $('.first-item-hover').addClass('first-item');
+      $('.first-item').removeClass('first-item-hover');
+    })
+    $('.blog-item').mouseover(function(){
+      $('.second-item').addClass('second-item-hover');
+      $('.second-item-hover').removeClass('second-item');
+    })
+    $('.blog-item').mouseout(function(){
+      $('.second-item-hover').addClass('second-item');
+      $('.second-item').removeClass('second-item-hover');
+    })
+    $('.manage-item').mouseover(function(){
+      $('.third-item').addClass('third-item-hover');
+      $('.third-item-hover').removeClass('third-item');
+    })
+    $('.manage-item').mouseout(function(){
+      $('.third-item-hover').addClass('third-item');
+      $('.third-item').removeClass('third-item-hover');
+    })
+    $('.wrapper-bottom1-links-left').mouseover(function(){
+      $(this).addClass("wrapper-bottom1-links-left-hover");
+    })
+    $('.wrapper-bottom1-links-left').mouseout(function(){
+      $(this).attr("class",'wrapper-bottom1-links-left');
+    })
+    $('.wrapper-bottom1-links-right').mouseover(function(){
+      $(this).attr("class",'wrapper-bottom1-links-right-hover');
+    })
+    $('.wrapper-bottom1-links-right').mouseout(function(){
+      $(this).attr("class",'wrapper-bottom1-links-right');
+    })
+    $('.down-icon').mouseover(function(){
+      $(this).attr("class",'btn-hover');
+    })
+    $('.down-icon').mouseout(function(){
+      $(this).attr("class",'down-icon');
+    })
+    $('.menu-icon').mouseover(function(){
+      $(this).attr("class",'menu-hover menu-fixed menu-right-bottom');
+    })
+    $('.menu-icon').mouseout(function(){
+      $(this).attr("class",'menu-icon menu-fixed menu-right-bottom');
+    })
+    $('.readmoreblog').mouseover(function(){
+      $(this).attr("class",'header readmore-black');
+    });
+    $('.readmoreblog').mouseout(function(){
+      $(this).attr("class",'header');
+    })
+    $('#toNext-button').click(function(){
+      $(window).scrollTo(800,500);
+    });
+    var flag = 0;
+    $('#menu-button').click(function(){
+      if(flag == 0){
+        $('#menu-button-icon').attr("class",'close icon animate__animated animate__jackInTheBox');
+        $('.wrapper-menu-default').attr("class",'wrapper-menu-show');
+        flag = 1;
+      }else if(flag == 1){
+        $('#menu-button-icon').attr("class",'list icon animate__animated animate__jackInTheBox');
+        $('.wrapper-menu-show').attr("class",'wrapper-menu-default');
+        flag = 0;
+      }
+    });
+    function jumpIndexPage(){
+      window.location.href=/*[[@{/index}]]*/"/index";
+    }
+    function jumpAboutPage(){
+      window.location.href=/*[[@{/about}]]*/"/about";
+    }
+
+    $('#toTop-button').click(function(){
+      $(window).scrollTo(0,500);
+    });
+    var waypoint = new Waypoint({
+      element: document.getElementById('waypoint'),
+      handler: function(direction) {
+        if(direction == 'down'){
+          $('#toTop-button').show(100);
+        } else {
+          $('#toTop-button').hide(500);
+        }
+        console.log('Scrolled to waypoint!')
+      }
+    });
+  </script>
+</body>
+</html>

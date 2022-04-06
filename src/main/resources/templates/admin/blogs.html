@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+  <title>博客管理-Hokwok</title>
+</head>
+<body>
+
+  <!-- 导航 -->
+  <nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+      <div class="ui inverted secondary stackable menu">
+        <h2 class="ui teal header item">管理后台</h2>
+        <a href="#" th:href="@{/admin/blogs}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="home icon"></i>博客</a>
+        <a href="#" th:href="@{/admin/types}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="idea icon"></i>分类</a>
+        <a href="#" th:href="@{/admin/tags}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="tags icon"></i>标签</a>
+        <div class="right m-item m-mobile-hide menu">
+          <div class="ui dropdown item">
+            <div class="text">
+              <img src="../../static/images/head.jpg" th:src="@{/images/head.jpg}" alt="" class="ui avatar image">
+              Hokwok
+            </div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <a href="#" th:href="@{/admin/logout}" class="item">注销</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+      <i class="sidebar icon"></i>
+    </a>
+  </nav>
+
+  <div class="ui attached pointing menu">
+    <div class="ui container">
+      <div class="right menu">
+        <a href="#" th:href="@{/admin/blogs/input}" class="item">发布</a>
+        <a href="#" th:href="@{/admin/blogs}" class="teal active item">列表</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 中间内容 -->
+  <div class="m-container-small m-padded-tb-big" style="height: 80% !important;">
+    <div class="ui container">
+<!--      <form action="#" th:action="@{/admin/blogs}" method="post" class="ui secondary segment form">-->
+      <div class="ui secondary segment form">
+        <div class="inline fields">
+          <div class="field">
+            <input id="titlesearch" type="text" name="title" placeholder="标题">
+          </div>
+          <div class="field">
+            <div class="ui selection dropdown">
+              <input id="typesearch" type="hidden" name="type">
+              <i class="dropdown icon"></i>
+              <div class="default text">分类</div>
+              <div class="menu">
+                <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}" >错误日志</div>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui checkbox">
+              <input id="recommend"  name="recommend" type="checkbox">
+              <label for="recommend">推荐</label>
+            </div>
+          </div>
+          <div class="field">
+            <button th:onclick="search()" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>
+          </div>
+        </div>
+<!--      </form>-->
+      </div>
+
+      <div id="table-container">
+        <table th:fragment="blogList" class="ui compact teal table">
+          <input id="titleProSearch" th:value="${titlesearch}" type="hidden">
+          <input id="typeProsearch" th:value="${typesearch}" type="hidden">
+          <input id="proRecommend" th:value="${recommend}" type="hidden">
+          <thead>
+          <tr>
+            <th></th>
+            <th>标题</th>
+            <th>类型</th>
+            <th>推荐</th>
+            <th>状态</th>
+            <th>更新时间</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="blog,iterStat: ${blogs}">
+            <td th:text="${iterStat.count}">1</td>
+            <td th:text="${blog.title}">Java基础</td>
+            <td th:text="${blog.typeName}">认知升级</td>
+            <td th:text="${blog.recommend} ? '是' : '否'">是</td>
+            <td th:text="${blog.published} ? '发布' : '草稿'">草稿</td>
+            <td th:text="${#dates.format(blog.update_time,'yyyy-MM-dd HH:mm')}">2021-12-05 20:21</td>
+            <td>
+              <a href="#" th:href="@{/admin/blogs/edit/{id}(id=${blog.id})}" class="ui mini teal basic button">编辑</a>
+              <a href="#" th:href="@{/admin/blogs/delete/{id}(id=${blog.id})}" class="ui mini red basic button">删除</a>
+            </td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <th colspan="7">
+              <div class="ui mini pagination menu" th:if="${totalCount}>5">
+                <a th:onclick="gopage([[${currentPageNo-1}]])" class="item" th:unless="${#strings.isEmpty(prePageHave)}">上一页</a>
+                <a th:onclick="gopage([[${currentPageNo+1}]])" class="item" th:unless="${#strings.isEmpty(nextPageHave)}">下一页</a>
+              </div>
+              <a href="#" th:href="@{/admin/blogs/input}" class="ui mini right floated teal basic button" style="margin-top: 0.6em;">新增</a>
+            </th>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+        <i class="close icon"></i>
+        <div class="header">提示：</div>
+        <p th:text="${message}">message</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 底部 -->
+  <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-huge">
+    <div class="ui center aligned container">
+      <div class="ui inverted divided stackable grid">
+        <div class="three wide column">
+          <div class="ui inverted link list">
+            <div class="item">
+              <img src="../../static/images/wechart.jpg" th:src="@{/images/wechart.jpg}" class="ui rounded image" alt="" style="width: 110px">
+            </div>
+          </div>
+        </div>
+        <div class="three wide column">
+          <h4 class="ui inverted header">联系我</h4>
+          <div class="ui inverted link list">
+            <a class="item">Email:596677937@qq.com</a>
+            <a class="item">QQ：596677937</a>
+          </div>
+        </div>
+        <div class="three wide column">
+          <h4 class="ui inverted header">友链</h4>
+          <div class="ui inverted link list">
+            <a class="item" href="#" target="_blank">Kwok's Blog</a>
+          </div>
+        </div>
+        <div class="seven wide column">
+          <h4 class="ui inverted header">Blog</h4>
+          <p class="m-text-thin m-text-spaced m-opacity-mini">
+            这是我的个人博客，记录着我的学习以及生活，也希望对大家有所帮助...
+          </p>
+        </div>
+      </div>
+      <div class="ui inverted section divider"></div>
+      <p style="text-align: center" class="m-text-thin m-text-spaced m-opacity-tiny">
+        Copyright ©2021 Designed by Hokwok
+      </p>
+    </div>
+  </footer>
+
+  <th:block th:replace="_fragments :: script">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+  </th:block>
+
+  <script>
+    //网站运营时长
+    function show_date_time(){
+      window.setTimeout("show_date_time()", 1000);
+      BirthDay=new Date("10/13/2021 16:51:15");
+      today=new Date();
+      timeold=(today.getTime()-BirthDay.getTime());
+      sectimeold=timeold/1000
+      secondsold=Math.floor(sectimeold);
+      msPerDay=24*60*60*1000
+      e_daysold=timeold/msPerDay
+      daysold=Math.floor(e_daysold);
+      e_hrsold=(e_daysold-daysold)*24;
+      hrsold=Math.floor(e_hrsold);
+      e_minsold=(e_hrsold-hrsold)*60;
+      minsold=Math.floor((e_hrsold-hrsold)*60);
+      seconds=Math.floor((e_minsold-minsold)*60);
+      span_dt_dt.innerHTML='<font style=color:#00FF00>'+daysold+'</font> 天 <font style=color:#00FF00>'+hrsold+'</font> 时 <font style=color:#00FF00>'+minsold+'</font> 分 <font style=color:#00FF00>'+seconds+'</font> 秒';
+    }
+    show_date_time();
+
+    $('.menu.toggle').click(function(){
+      $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+      on: 'hover'
+    });
+
+    // 消息提示关闭初始化
+    $('.message .close')
+      .on('click', function() {
+        $(this)
+          .closest('.message')
+          .transition('fade');
+      });
+
+    function gopage(pageIndex) {
+      console.log($("#titleProSearch").val())
+      console.log($("#typeProsearch").val())
+      console.log($("#proRecommend").val())
+      $("#table-container").load(/*[[@{/admin/blogs/topage}]]*/"/admin/blogs/topage", {
+          pageIndex:pageIndex,
+          titlesearch:$("#titleProSearch").val(),
+          typesearch:$("#typeProsearch").val(),
+          recommend:$("#proRecommend").val()
+        }
+      )
+    }
+    function search() {
+      $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search", {
+        titlesearch:$("#titlesearch").val(),
+        typesearch:$("#typesearch").val(),
+        recommend:$("#recommend").prop("checked")
+        }
+      )
+    }
+  </script>
+</body>
+</html>

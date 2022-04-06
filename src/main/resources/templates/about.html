@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <!-- <link rel="stylesheet" href="../static/css/me.css"> -->
+  <link rel="stylesheet" href="../static/css/animate.min.css" th:href="@{/css/animate.min.css}"/>
+  <link rel="stylesheet" th:href="@{/css/kwokindex.css}" href="../static/css/kwokindex.css">
+  <link rel="stylesheet" th:href="@{/css/FiraCode.css}" href="../static/css/FiraCode.css">
+  <title>关于我</title>
+</head>
+
+<body>
+
+  <!-- 导航 -->
+  <nav th:replace="_fragments :: menu(5)" class="ui inverted attached segment m-padded-tb-mini"></nav>
+
+  <div id="box">
+    <!-- 个人资料卡片 -->
+    <div class="meBox">
+      <!-- 头像 -->
+      <div class="headPhoto"></div>
+      <!-- 介绍 -->
+      <div class="meBox-title">
+        <p>I'm Hokwok</p>
+        <div class="fg"></div>
+      </div>
+      <div class="meBox-text">
+        <p>一条咸鱼<img src="../static/images/fish.png" th:src="@{/images/fish.png}" alt="咸鱼" style="width: 20px; vertical-align: middle;"></p>
+        <p>喜欢音乐，摄影</p>
+        <p>瞎折腾浪费时间最在行</p>
+        <p>最爱<img src="../static/images/002.png" th:src="@{/images/002.png}" alt="冰激凌" style="width: 15px; vertical-align: middle;"></p>
+      </div>
+    </div>
+
+    <!-- 伪终端介绍 -->
+    <div id="cmdBox">
+      <!-- 第一个终端 -->
+      <div class="cmd">
+        <!-- 三个按钮 -->
+        <div class="click">
+          <div class="red"></div>
+          <div class="yellow"></div>
+          <div class="green"></div>
+        </div>
+        <!-- 顶部标题 -->
+        <div class="title">
+          <span>ghh'details - bash</span>
+        </div>
+        <!-- 终端内文字 -->
+        <div class="cmdText">
+          <span style="color: rgb(0, 190, 0);">root@hokwok</span>
+          <span style="color: blue;">~</span>
+          <span style="color: rgb(39, 39, 39);">./tianqi.sh</span>
+          <br />
+          <iframe scrolling="no" src="https://tianqiapi.com/api.php?style=tc&skin=pitaya" frameborder="0"
+                  width="350" height="24" allowtransparency="true"></iframe>
+          <br />
+          <span style="color: rgb(0, 190, 0);">root@hokwok</span>
+          <span style="color: blue;">~</span>
+          <span style="color: rgb(39, 39, 39);">cat /me.txt</span>
+          <p>计算机只是爱好，会去自学自己感兴趣的一切东西</p>
+          <p>略懂Design；PR；PS；AI，爱好折腾去解决一切问题</p>
+          <p>目前，在读研究生二年级</p>
+          <p>在我眼里，没有什么问题是尝试不能解决的，如果有那就多尝试几次甚至上百次</p>
+          <p>追着光，靠近光，成为光，散发光~</p>
+          <span style="color: rgb(0, 190, 0);">root@hokwok</span>
+          <span style="color: blue;">~</span>
+          <span style="color: rgb(39, 39, 39);">sudo rm -rf /过去的自己/*</span>
+        </div>
+      </div>
+      <!-- 第二个终端 -->
+      <div class="cmd cmd2">
+        <!-- 三个按钮 -->
+        <div class="click">
+          <div class="red"></div>
+          <div class="yellow"></div>
+          <div class="green"></div>
+        </div>
+        <!-- 顶部标题 -->
+        <div class="title">
+          <span>ghh'details - bash</span>
+        </div>
+        <!-- 终端内文字 -->
+        <div class="cmdText">
+          <span style="color: rgb(0, 190, 0);">root@hokwok</span>
+          <span style="color: blue;">~</span>
+          <span style="color: rgb(39, 39, 39);">./links.sh</span>
+          <p>我的其他信息：</p>
+          <ul class="ul">
+            <li><a target="_blank" href="https://github.com/Hokwok">github</a></li>
+            <li><a target="_blank" href="https://gitee.com/mr-kwok">gitee</a></li>
+            <li><a target="_blank" href="https://blog.csdn.net/qq_41355222?spm=1001.2100.3001.5343">CSDN</a></li>
+          </ul>
+          <span style="color: rgb(0, 190, 0);">root@hokwok</span>
+          <span style="color: blue;">~</span>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- 底部 -->
+  <footer th:replace="_fragments :: footer"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.3/jquery.scrollTo.min.js"></script>
+  <script src="../static/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>
+  <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+  <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
+  <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+
+  <!--鼠标点击效果-->
+  <script src="https://cdn.jsdelivr.net/gh/TRHX/CDN-for-itrhx.com@3.0.8/js/maodian.js"></script>
+  <!-- 落叶效果 -->
+  <script src="../static/js/su.js" th:src="@{/js/su.js}"></script>
+  <!-- 看板娘 -->
+  <!-- waifu-tips.js 依赖 JQuery 库 -->
+  <!--    <script src="../static/assets/jquery.min.js?v=3.3.1" th:src="@{/assets/jquery.min.js?v=3.3.1}"></script>-->
+  <!-- 使用 aotuload.js 引入看板娘 -->
+  <script src="../static/assets/autoload.js?v=1.4.2" th:src="@{/assets/autoload.js?v=1.4.2}"></script>
+  <!--网易云音乐侧挂 -->
+<!--  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>-->
+<!--  <script src="../static/js/music.js" th:src="@{/js/music.js}"></script>-->
+
+  <script>
+    (function ($) {
+      $.fn.snow = function (options) {
+        var $flake = $('<div id="snowbox" />').css({ 'position': 'absolute', 'z-index': '9999', 'top': '-50px' }).html('&#10052;'),
+                documentHeight = $(document).height(),
+                documentWidth = $(document).width(),
+                defaults = {
+                  minSize: 10,
+                  maxSize: 20,
+                  newOn: 1000,
+                  flakeColor: "#AFDAEF" /* 此处可以定义雪花颜色，若要白色可以改为#FFFFFF */
+                },
+                options = $.extend({}, defaults, options);
+        var interval = setInterval(function () {
+          var startPositionLeft = Math.random() * documentWidth - 100,
+                  startOpacity = 0.5 + Math.random(),
+                  sizeFlake = options.minSize + Math.random() * options.maxSize,
+                  endPositionTop = documentHeight - 200,
+                  endPositionLeft = startPositionLeft - 500 + Math.random() * 500,
+                  durationFall = documentHeight * 10 + Math.random() * 5000;
+          $flake.clone().appendTo('body').css({
+            left: startPositionLeft,
+            opacity: startOpacity,
+            'font-size': sizeFlake,
+            color: options.flakeColor
+          }).animate({
+            top: endPositionTop,
+            left: endPositionLeft,
+            opacity: 0.2
+          }, durationFall, 'linear', function () {
+            $(this).remove()
+          });
+        }, options.newOn);
+      };
+    })(jQuery);
+    $(function () {
+      $.fn.snow({
+        minSize: 5, /* 定义雪花最小尺寸 */
+        maxSize: 50,/* 定义雪花最大尺寸 */
+        newOn: 800  /* 定义密集程度，数字越小越密集 */
+      });
+    });
+    // 落叶效果
+    jQuery(document).ready(function ($) {
+      $('body').wpSuperSnow({
+        flakes: ['/images/about/007.png', '/images/about/006.png', '/images/about/004.png',
+          '/images/about/005.png', '/images/about/003.png'
+        ],
+        totalFlakes: '100',
+        zIndex: '999999999',
+        maxSize: '30',
+        maxDuration: '20',
+        useFlakeTrans: true
+      });
+    });
+
+    //网站运营时长
+    function show_date_time(){
+      window.setTimeout("show_date_time()", 1000);
+      BirthDay=new Date("10/13/2021 16:51:15");
+      today=new Date();
+      timeold=(today.getTime()-BirthDay.getTime());
+      sectimeold=timeold/1000
+      secondsold=Math.floor(sectimeold);
+      msPerDay=24*60*60*1000
+      e_daysold=timeold/msPerDay
+      daysold=Math.floor(e_daysold);
+      e_hrsold=(e_daysold-daysold)*24;
+      hrsold=Math.floor(e_hrsold);
+      e_minsold=(e_hrsold-hrsold)*60;
+      minsold=Math.floor((e_hrsold-hrsold)*60);
+      seconds=Math.floor((e_minsold-minsold)*60);
+      span_dt_dt.innerHTML='<font style=color:#00FF00>'+daysold+'</font> 天 <font style=color:#00FF00>'+hrsold+'</font> 时 <font style=color:#00FF00>'+minsold+'</font> 分 <font style=color:#00FF00>'+seconds+'</font> 秒';
+    }
+    show_date_time();
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+    <link href="../../static/css/popuo-box.css"  rel="stylesheet" th:href="@{/css/popuo-box.css}" type="text/css" media="all" />
+    <link rel="stylesheet" href="../../static/css/login.css" th:href="@{/css/login.css}" type="text/css" media="all">
+    <title>管理登录-Hokwok</title>
+</head>
+<body>
+
+<h1>HOKWOK'S BLOG</h1>
+
+<div class="w3layoutscontaineragileits">
+    <h2>账号登录</h2>
+    <form action="#" method="post" th:action="@{/admin/login}">
+        <input type="text" Name="username" placeholder="用户名" required>
+        <input type="password" Name="password" placeholder="密码" required>
+        <ul class="agileinfotickwthree">
+            <li>
+                <input type="checkbox" id="brand1" value="">
+                <label for="brand1"><span></span>记住我</label>
+                <a href="#">忘记密码?</a>
+            </li>
+        </ul>
+        <div style="font-weight: 500; font-size: 20px; color: red;margin-top: -2em;margin-bottom: 1em" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></div>
+        <div class="aitssendbuttonw3ls">
+            <input style="margin-left: 1em" type="submit" value="登录">
+            <div class="clear"></div>
+        </div>
+    </form>
+</div>
+
+<!-- //for register popup -->
+<div class="w3footeragile">
+    <p> &copy; Copyright ©2021 Designed by Hokwok</p>
+</div>
+
+<script type="text/javascript" src="../../static/js/login-jquery-2.1.4.min.js" th:src="@{/js/login-jquery-2.1.4.min.js}" ></script>
+<script src="../../static/js/login-jquery.magnific-popup.js" th:src="@{/js/login-jquery.magnific-popup.js}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.w3_play_icon,.w3_play_icon1,.w3_play_icon2').magnificPopup({
+            type: 'inline',
+            fixedContentPos: false,
+            fixedBgPos: true,
+            overflowY: 'auto',
+            closeBtnInside: true,
+            preloader: false,
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+
+    });
+</script>
+</body>
+</html>
