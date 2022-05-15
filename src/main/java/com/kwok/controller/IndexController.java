@@ -43,6 +43,11 @@ public class IndexController {
         return "enter";
     }
 
+    @GetMapping("/adele")
+    public String adele(Model model){
+        return "adele520";
+    }
+
     @GetMapping("/index")
     public String index(HttpServletRequest req, HttpServletResponse resp, Model model){
         String pageIndex = req.getParameter("pageIndex");

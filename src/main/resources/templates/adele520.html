@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Forever Love</title>
+  <link rel="stylesheet" href="static/css/bootstrap.min.css" th:href="@{/adele520/css/bootstrap.min.css}">
+  <link rel="stylesheet" href="static/css/animate.min.css" th:href="@{/adele520/css/animate.min.css}"/>
+  <link rel="stylesheet" type="text/css" href="static/css/lovelkm.css" th:href="@{/adele520/css/lovelkm.css}">
+  <link rel="icon" href="static/images/love.png" th:href="@{/adele520/images/love.png}">
+</head>
+
+<body>
+
+  <div class="lovepng">
+    <img id="love1" class="love1 animate__animated animate__fadeIn" src="static/images/love1.png" th:src="@{/adele520/images/love1.png}" alt="love1">
+    <blockquote id="speech-love1" class="speech-love1 animate__animated animate__fadeInDownBig">
+      <p>瞅瞅他在干啥呢!</p>
+    </blockquote>
+    <button id="button1" class="button1" style="display: none;" onclick="firstButton()">点击瞄一眼</button>
+
+    <img id="love2" class="love2 animate__animated animate__rotateInDownLeft" src="static/images/love22.png" th:src="@{/adele520/images/love22.png}" style="display: none;" alt="love2">
+    <blockquote id="speech-love2" style="display: none;" class="speech-love2 animate__animated animate__fadeIn">
+      <p>刘跨美同学，你好呀~</p>
+    </blockquote>
+    <button id="button2" style="display: none;" class="button2" onclick="secondButton()">再点下，还有哦</button>
+
+    <img id="love3" class="love3 animate__animated animate__slideInUp" src="static/images/love3.png" th:src="@{/adele520/images/love3.png}" style="display: none;" alt="love3">
+    <blockquote id="speech-love3" class="speech-love3 animate__animated animate__fadeIn" style="display: none;">
+      <p>520快乐(*^▽^*)</p>
+    </blockquote>
+
+    <img id="love4" class="love4 animate__animated animate__slideInUp" src="static/images/love4.png" th:src="@{/adele520/images/love4.png}" style="display: none;" alt="love4">
+    <!-- <blockquote id="speech-love4" class="speech-love4 animate__animated animate__fadeIn" style="display: none;">
+      <p>哇，好久了哎</p>
+    </blockquote> -->
+  </div>
+
+  <div id="container" class="container" style="display: none;">
+    <div class="content">
+      <div class="headtitle animate__animated animate__backInDown">
+        <img src="static/images/ghh.jpg" th:src="@{/adele520/images/ghh.jpg}" alt="ghh">
+        <img src="static/images/cat.gif" th:src="@{/adele520/images/cat.gif}" alt="cat">
+        <img src="static/images/lkm.jpg" th:src="@{/adele520/images/lkm.jpg}" alt="lkm">
+      </div>
+      <div class="animate__animated animate__fadeInUp">
+        <div class="destitle">GHH & LKM 在一起的日子</div>
+        <div class="DateCountdown" id="span_dt_dt"></div>
+        <div class="loveword1">
+          "你是我的今天以及所有的明天"
+        </div>
+        <div class="loveword2">
+          "You are my today and all of my tomorrows"
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 两只XHJ一样的猪 -->
+  <div class="lkmIsPig">
+    <img src="static/images/pig1.gif" th:src="@{/adele520/images/pig1.gif}" alt="pig1" style="display: none;" class="pig1">
+    <img src="static/images/pig2.gif" th:src="@{/adele520/images/pig2.gif}" alt="pig2" style="display: none;" class="pig2">
+  </div>
+
+  <audio id="bgmusic" controls="controls" preload hidden>
+    <source src="static/music/bg.mp3" th:src="@{/adele520/music/bg.mp3}"/>
+  </audio>
+
+  <script type="text/javascript" src="static/js/jquery.min.js" th:src="@{/adele520/js/jquery.min.js}"></script>
+
+  <!-- 落叶效果 -->
+  <script src="static/js/su.js" th:src="@{/adele520/js/su.js}"></script>
+
+  <script>
+
+    function firstButton(){
+      var love2 = document.getElementById('love2')
+      love2.style.display="block";
+      var speech_love2 = document.getElementById('speech-love2')
+      speech_love2.style.display="block";
+      var button2 = document.getElementById('button2')
+      button2.style.display="block";
+      var love1 = document.getElementById('love1')
+      love1.style.display="none";
+      var speech_love1 = document.getElementById('speech-love1')
+      speech_love1.style.display="none";
+      var button1 = document.getElementById('button1')
+      button1.style.display="none";
+    }
+
+    function img4Show(){
+      var love4 = document.getElementById('love4')
+      love4.style.display="block";
+      var speech_love4 = document.getElementById('speech-love4')
+      speech_love4.style.display="block";
+    }
+
+    function secondButton(){
+      var audio1 = document.getElementById('bgmusic');
+      audio1.play();
+      var button2 = document.getElementById('button2')
+      button2.style.display="none";
+      var love2 = document.getElementById('love2')
+      love2.style.display="none";
+      var speech_love2 = document.getElementById('speech-love2')
+      speech_love2.style.display="none";
+      var container = document.getElementById('container')
+      container.style.display="block";
+      var love3 = document.getElementById('love3')
+      love3.style.display="block";
+      var speech_love3 = document.getElementById('speech-love3')
+      speech_love3.style.display="block";
+      setTimeout("img4Show()",1000)
+    }
+
+    // // 微信上自动播放
+    // function audioAutoPlay(id){
+    //   var audio1 = document.getElementById(id);
+    //   audio1.play();
+    //   document.addEventListener("WeixinJSBridgeReady", function () {
+    //     audio1.play();
+    //   }, false);
+    // }
+    // audioAutoPlay('bgmusic');
+
+    // 点击页面自动播放
+    // function toggleSound() {
+    //   var music = document.getElementById("bgmusic");//获取ID
+    //     console.log(music);
+    //     console.log(music.paused);
+    //   if (music.paused) { //判读是否播放
+    //     music.paused=false;
+    //     music.play(); //没有就播放
+    //   }
+    // }
+    // setInterval("toggleSound()",1);
+
+    // 花瓣飘落效果
+    jQuery(document).ready(function ($) {
+      $('body').wpSuperSnow({
+        flakes: [
+          '/adele520/images/001.png',
+          '/adele520/images/002.png',
+          '/adele520/images/003.png',
+          '/adele520/images/004.png'
+        ],
+        totalFlakes: '100',
+        zIndex: '999999999',
+        maxSize: '30',
+        minSize: '10',
+        maxDuration: '20',
+        useFlakeTrans: true
+      });
+    });
+
+    function show_date_time(){
+      window.setTimeout("show_date_time()", 1000);
+      BirthDay=new Date("04/02/2022 13:00:00");
+      today=new Date();
+      timeold=(today.getTime()-BirthDay.getTime());
+      sectimeold=timeold/1000
+      secondsold=Math.floor(sectimeold);
+      msPerDay=24*60*60*1000
+      e_daysold=timeold/msPerDay
+      daysold=Math.floor(e_daysold);
+      e_hrsold=(e_daysold-daysold)*24;
+      hrsold=Math.floor(e_hrsold);
+      e_minsold=(e_hrsold-hrsold)*60;
+      minsold=Math.floor((e_hrsold-hrsold)*60);
+      seconds=Math.floor((e_minsold-minsold)*60);
+      span_dt_dt.innerHTML='<font style=color:rgb(253,99,125) >'+daysold+'</font> 天 <font style=color:rgb(253,99,125)>'+hrsold+'</font> 时 <font style=color:rgb(253,99,125)>'+minsold+'</font> 分 <font style=color:rgb(253,99,125)>'+seconds+'</font> 秒';
+    }
+    show_date_time();
+
+    function button1Show(){
+      var button1 = document.getElementById('button1')
+      button1.style.display="block";
+    }
+    window.onload = function() {
+      setTimeout("button1Show()",2000)
+    }
+  </script>
+</body>
+</html>
